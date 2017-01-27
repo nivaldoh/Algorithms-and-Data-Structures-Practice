@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-//import java.lang.*;
 
 public class Percolation {
  WeightedQuickUnionUF grid;
@@ -54,16 +53,13 @@ public class Percolation {
           grid.union(index, rightIndex);
       }
   }
-  
-  
  }
  
  public boolean isOpen(int row, int col){ // is site (row, col) open?
   return open[getIndex(row, col)];
  }
  
- //this is probably wrong
- public boolean isFull(int row, int col){ // is site (row, col) full? (connected to the top??)
+ public boolean isFull(int row, int col){ // is site (row, col) full? (connected to the top)
   if(!open[getIndex(row, col)]) return false;
   int q = getIndex(row, col);
   for(int i=0; i<n; i++){
@@ -89,27 +85,7 @@ public class Percolation {
   }
   return false;
  }
- 
- private void connectOpenTiles(int index){
-  if(!open[index]) return;
-  if(getRow(index) >= n || index < 0 || getCol(index) >= n) return;
-  int down = index + n, right = index + 1;
-  if(down < total){
-      if(open[down]) {
-          grid.union(index, down);
-          connectOpenTiles(down);
-      }
-  }
-  if(right < total){
-      if(open[right]) {
-          grid.union(index, right);
-          connectOpenTiles(right);
-      }
-  }
-  
-  
- }
- 
+
  private int getIndex(int row, int col){ 
   //takes row and col and returns the equivalent index in a 1D array
   //index starting at 1
