@@ -75,9 +75,6 @@ public class Percolation {
  }
  
  public boolean percolates(){ // does the system percolate?
-     //for(int j=0; j<n; j++){
-       //  connectOpenTiles(j); //call this for every element in the first line
-    // }
   for(int i=total-n; i<total; i++){
    if(isFull(getRow(i)+1, getCol(i)+1)){
     return true;
