@@ -1,6 +1,7 @@
 *.class
 *.txt
 *.png
+*.zip
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

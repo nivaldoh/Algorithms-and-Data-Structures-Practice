@@ -7,7 +7,7 @@ public class PercolationStats {
     private double[] results;
     
     public static void main(String[] args){
-        PercolationStats ps = new PercolationStats(100, 100);
+        PercolationStats ps = new PercolationStats(300, 300);
         System.out.println("Mean = " + ps.mean());
         System.out.println("Std Dev = " + ps.stddev());
         System.out.println("95% confidence interval = [" + ps.confidenceLo() + ", " + ps.confidenceHi() + "]");
