@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     
@@ -6,8 +7,10 @@ public class PercolationStats {
     double[] results;
     
     public static void main(String[] args){
-        PercolationStats ps = new PercolationStats(30, 100);
-        System.out.println("Mean: " + ps.mean());
+        PercolationStats ps = new PercolationStats(100, 100);
+        System.out.println("Mean = " + ps.mean());
+        System.out.println("Std Dev = " + ps.stddev());
+        System.out.println("95% confidence interval = [" + ps.confidenceLo() + ", " + ps.confidenceHi() + "]");
    }
     
     public PercolationStats(int N, int trials){    // perform trials independent experiments on an n-by-n grid
@@ -41,13 +44,13 @@ public class PercolationStats {
         return sum/t;
    }
     public double stddev(){                        // sample standard deviation of percolation threshold
-       return 0;
+       return StdStats.stddev(results);
    }
     public double confidenceLo(){                  // low  endpoint of 95% confidence interval
-        return 0;
+        return mean() - 1.96d*Math.sqrt(stddev())/Math.sqrt(t);
    }
     public double confidenceHi(){                  // high endpoint of 95% confidence interval
-        return 0;
+        return mean() + 1.96d*Math.sqrt(stddev())/Math.sqrt(t);
    }
 
     
