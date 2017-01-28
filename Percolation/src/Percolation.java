@@ -1,11 +1,11 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
- WeightedQuickUnionUF grid;
- boolean[] open;
- int n; //grid is n*n
- int total;
- int openCount;
+ private WeightedQuickUnionUF grid;
+ private boolean[] open;
+ private int n; //grid is n*n
+ private int total;
+ private int openCount;
  
  public static void main(String[] args) {
  //Percolation p = new Percolation(4);
@@ -13,17 +13,21 @@ public class Percolation {
  }
  
  public Percolation(int N){ // create n-by-n grid, with all sites blocked
+  if(N <= 0) throw new java.lang.IllegalArgumentException();
   n = N;
   total = n*n;
   grid = new WeightedQuickUnionUF(total); 
   open = new boolean[total];
-  for(int i=0; i<total; i++){
+  for(int i = 0; i < total; i++){
    open[i] = false;
   }
   openCount = 0;
  }
  
  public void open(int row, int col){ // open site (row, col) if it is not open already
+  if (row <= 0 || row > n) throw new IndexOutOfBoundsException("row index i out of bounds");
+  if (col <= 0 || col > n) throw new IndexOutOfBoundsException("col index i out of bounds");
+  if(isOpen(row, col)) return;
   open[getIndex(row, col)] = true;
   openCount++;
   
@@ -56,10 +60,14 @@ public class Percolation {
  }
  
  public boolean isOpen(int row, int col){ // is site (row, col) open?
+  if (row <= 0 || row > n) throw new IndexOutOfBoundsException("row index i out of bounds");
+  if (col <= 0 || col > n) throw new IndexOutOfBoundsException("col index i out of bounds");
   return open[getIndex(row, col)];
  }
  
  public boolean isFull(int row, int col){ // is site (row, col) full? (connected to the top)
+  if (row <= 0 || row > n) throw new IndexOutOfBoundsException("row index i out of bounds");
+  if (col <= 0 || col > n) throw new IndexOutOfBoundsException("col index i out of bounds");
   if(!open[getIndex(row, col)]) return false;
   int q = getIndex(row, col);
   for(int i=0; i<n; i++){

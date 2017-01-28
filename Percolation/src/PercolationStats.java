@@ -3,8 +3,8 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     
-    int n, openCount, t;
-    double[] results;
+    private int n, openCount, t;
+    private double[] results;
     
     public static void main(String[] args){
         PercolationStats ps = new PercolationStats(100, 100);
@@ -47,10 +47,10 @@ public class PercolationStats {
        return StdStats.stddev(results);
    }
     public double confidenceLo(){                  // low  endpoint of 95% confidence interval
-        return mean() - 1.96d*Math.sqrt(stddev())/Math.sqrt(t);
+        return mean() - 1.96d*stddev()/Math.sqrt(t);
    }
     public double confidenceHi(){                  // high endpoint of 95% confidence interval
-        return mean() + 1.96d*Math.sqrt(stddev())/Math.sqrt(t);
+        return mean() + 1.96d*stddev()/Math.sqrt(t);
    }
 
     
