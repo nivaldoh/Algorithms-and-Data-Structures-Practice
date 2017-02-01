@@ -5,7 +5,7 @@ public class Deque<Item> implements Iterable<Item> {
     
     private int n;
     private Node first_node;
-    private Node current_node;
+    private Node last_node;
     
     private class Node{
         public Item item;
@@ -15,11 +15,11 @@ public class Deque<Item> implements Iterable<Item> {
     public Deque() {                          // construct an empty deque
          n = 0;
          first_node = null;
-         current_node = null;
+         last_node = null;
     }
     
     public boolean isEmpty() {                // is the deque empty?
-        return n ==0;
+        return n == 0;
     }
     
     public int size() {                       // return the number of items on the deque
@@ -28,10 +28,21 @@ public class Deque<Item> implements Iterable<Item> {
     
     public void addFirst(Item item) {          // add the item to the front
         if(item == null) throw new java.lang.NullPointerException();
+        if(last_node == null) last_node = first_node;
+        Node previous_first = first_node; //TODO: check for mutations
+        first_node = new Node();
+        first_node.item = item;
+        first_node.next_node = previous_first;
     }
     
     public void addLast(Item item) {           // add the item to the end
-    
+        if(item == null) throw new java.lang.NullPointerException();
+        if(last_node == null) first_node = last_node;
+        Node to_add = new Node();
+        to_add.item = item;
+        to_add.next_node = null;
+        last_node.next_node = to_add;
+        last_node = to_add;
     }
     
     public Item removeFirst(){                // remove and return the item from the front
@@ -52,7 +63,7 @@ public class Deque<Item> implements Iterable<Item> {
         
         public boolean hasNext() {
             //return i < n;
-            return current_node.next_node != null;
+            return i_current_node != null;
         }
 
         public void remove() {
@@ -61,12 +72,23 @@ public class Deque<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
+            Item next = i_current_node.item;
             i_current_node = i_current_node.next_node;
-            return i_current_node.item;
+            return next;
         }
     }
     
     public static void main(String[] args) {   // unit testing (optional)
-        
+        Deque<String> d = new Deque<String>();
+        d.addFirst("FIRST 1");
+        d.addFirst("FIRST 2");
+        d.addLast("LAST 1");
+        d.addLast("LAST 2");
+        d.addFirst("FIRST 3");
+        d.addLast("LAST 3");
+        Iterator it = d.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
     }
 }
