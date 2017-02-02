@@ -7,7 +7,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private Node first_node;
     private Node last_node;
     
-    
     private class Node{
         public Item item;
         public Node next_node;
@@ -66,7 +65,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public Item sample() {                     // return (but do not remove) a random item
-        return (Item) new Object();
+        int r = StdRandom.uniform(n);
+        Node node = first_node;
+        for(int i = 0; i < r; i++){
+            //if(r == 0) break;
+            node = node.next_node;
+        }
+        return node.item;
     }
     
     public Iterator<Item> iterator() {         // return an independent iterator over items in random order
@@ -88,9 +93,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 temp_index++;
             }
             StdRandom.shuffle(a);
-            //for(int i = 0; i < n; i++){
-                //System.out.println(a[0]);
-            //}
         }
         
         public boolean hasNext() {
@@ -107,7 +109,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             i++;
             return item;
         }
-        
     }
     
     public static void main(String[] args) {   // unit testing (optional)
@@ -117,10 +118,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         rq.enqueue("3");
         rq.enqueue("4");
         rq.enqueue("5");
+        rq.enqueue("6");
+        rq.enqueue("7");
+        rq.enqueue("8");
         
         Iterator it = rq.iterator();
         while(it.hasNext()){
-            System.out.println(it.next());
+            //System.out.println(it.next());
+            System.out.println(rq.sample());
+            it.next();
         }
     }
 }
