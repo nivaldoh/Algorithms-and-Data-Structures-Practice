@@ -92,7 +92,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
     
     public Item removeLast() {                 // remove and return the item from the end
-        if(last_node == null) throw new NoSuchElementException();
         if(n == 1){
             if(first_node == null) throw new java.lang.NullPointerException();
             Item item = first_node.item;
@@ -101,6 +100,7 @@ public class Deque<Item> implements Iterable<Item> {
             n--;
             return item;
         }
+        if(last_node == null) throw new NoSuchElementException();
         
         Item item = last_node.item;
         Node second_last = last_node.prev_node;

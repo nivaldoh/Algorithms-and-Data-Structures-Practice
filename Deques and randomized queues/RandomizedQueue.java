@@ -183,41 +183,29 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public static void main(String[] args) {   // unit testing (optional)
-        RandomizedQueue<String> rq = new RandomizedQueue<String>();
+        RandomizedQueue<Double> rq = new RandomizedQueue<Double>();
         
         
-        rq.enqueue("1");
-        rq.enqueue("2");
-        rq.enqueue("3");
-        rq.enqueue("4");
-        rq.enqueue("5");
+        rq.enqueue(0.1);
+        rq.enqueue(0.7);
+        rq.enqueue(0.0);
+        rq.enqueue(0.1);
+        rq.enqueue(0.1);
         
-        rq.dequeue();
-        rq.dequeue();
-        rq.dequeue();
-        rq.dequeue();
-        rq.dequeue();
-        
-        rq.enqueue("1");
-        rq.enqueue("2");
-        rq.enqueue("3");
-        rq.enqueue("4");
-        rq.enqueue("5");
+        //rq.dequeue();
         
         System.out.println(rq.dequeue());
         System.out.println(rq.dequeue());
         System.out.println(rq.dequeue());
         System.out.println(rq.dequeue());
         System.out.println(rq.dequeue());
-        
-       
         
         
        Iterator it = rq.iterator();
-       //while(it.hasNext()){
-            //System.out.println(it.next());
+       while(it.hasNext()){
+            System.out.println(it.next());
             //System.out.println(rq.dequeue());
             //it.next();
-       //}
+       }
     }
 }
