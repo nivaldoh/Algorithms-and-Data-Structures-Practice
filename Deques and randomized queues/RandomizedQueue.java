@@ -31,7 +31,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Node node = new Node();
         node.item = item;
         if(n == 0) {
-            node.next_node = null;
             first_node = node;
             first_node.prev_node = null;
             first_node.next_node = null;
@@ -58,17 +57,51 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public Item dequeue() {                    // remove and return a random item
-        
-        n--;
-        
-        return (Item) new Object();
-    }
-    
-    public Item sample() {                     // return (but do not remove) a random item
+        if(n == 0) throw new java.lang.NullPointerException();
+        if(n == 1){
+            Item item = first_node.item;
+            n = 0;
+            first_node = null;
+            last_node = null;
+            return item;
+        }
+        //go to a random node
         int r = StdRandom.uniform(n);
         Node node = first_node;
         for(int i = 0; i < r; i++){
-            //if(r == 0) break;
+            node = node.next_node;
+        }
+        //remove the random node from the queue and return its item
+        Node previous = node.prev_node;
+        Node next = node.next_node;
+        if(previous != null) previous.next_node = next;
+        if(previous == null){
+            if(next == null) throw new java.lang.NullPointerException();
+            first_node = next;
+        }
+        if(next != null) next.prev_node = previous;
+        n--;
+        if(n == 1 && previous != null){
+            previous.prev_node = null;
+            previous.next_node = null;
+            first_node = previous;
+            last_node = previous;
+        }
+        else if (n == 1 && next != null){
+            next.prev_node = null;
+            next.next_node = null;
+            first_node = next;
+            last_node = next;                
+        }
+        Item it = node.item;
+        node = null;
+        return it;
+    }
+    
+    public Item sample() {                     // return (but do not remove) a random item
+        int r = StdRandom.uniform(n+1);
+        Node node = first_node;
+        for(int i = 0; i < r; i++){
             node = node.next_node;
         }
         return node.item;
@@ -78,25 +111,56 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return new ArrayIterator();
     }
     
-    private class ArrayIterator implements Iterator<Item>{ //iterator uses an array for linear time constructor
-        private Item[] a;
+    private class ArrayIterator implements Iterator<Item>{
+        private Node[] a;
         private int i;
+        private Node i_first_node;
+        private Node i_current_node;
         
-        public ArrayIterator(){
+        public ArrayIterator(){ //TODO: fix iterator data structure being separate from the real one
+            if(n == 0) throw new java.lang.NullPointerException();
+            if(n == 1) {
+                i_first_node = first_node;
+                i_current_node = i_first_node;
+                return;
+            }
+            //pass linked list to array
             i = 0;
-            a = (Item[]) new Object[n];
-            Node n = first_node;
+            a = (RandomizedQueue<Item>.Node[]) new RandomizedQueue.Node[n];
+            Node node = first_node;
             int temp_index = 0;
-            while(n != null){
-                a[temp_index] = n.item;
-                n = n.next_node;
+            while(node != null){
+                a[temp_index] = node;
+                node = node.next_node;
                 temp_index++;
             }
+            //shuffle node order
             StdRandom.shuffle(a);
+            //turn array into a shuffled linked list
+            for(int j = 0; j < n; j++) {
+                if(j == 0) {
+                    i_first_node = a[0];
+                    i_first_node.prev_node = null;
+                    if(n == 1){
+                        i_first_node.next_node = null;
+                    }
+                    else i_first_node.next_node = a[1];
+                    continue;
+                }
+                if(j == n - 1) {
+                    a[j].prev_node = a[j - 1];
+                    a[j].next_node = null;
+                    continue;
+                }
+                a[j].prev_node = a[j - 1];
+                a[j].next_node = a[j + 1];
+            }
+            i_current_node = i_first_node;
+            //a[] = null //free memory?
         }
         
         public boolean hasNext() {
-            return i < n;
+            return i_current_node != null;
         }
 
         public void remove() {
@@ -105,8 +169,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            Item item = a[i];
-            i++;
+            Item item = i_current_node.item;
+            //System.out.println(i_current_node.prev_node);
+            i_current_node = i_current_node.next_node;
             return item;
         }
     }
@@ -118,15 +183,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         rq.enqueue("3");
         rq.enqueue("4");
         rq.enqueue("5");
-        rq.enqueue("6");
-        rq.enqueue("7");
-        rq.enqueue("8");
         
-        Iterator it = rq.iterator();
-        while(it.hasNext()){
+        //System.out.println(rq.dequeue());
+        
+        
+        
+       Iterator it = rq.iterator();
+       while(it.hasNext()){
             //System.out.println(it.next());
-            System.out.println(rq.sample());
+            System.out.println(rq.dequeue());
             it.next();
-        }
+       }
     }
 }
