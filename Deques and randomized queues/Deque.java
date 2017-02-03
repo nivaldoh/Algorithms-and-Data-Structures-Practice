@@ -70,7 +70,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
     
     public Item removeFirst(){                // remove and return the item from the front
-        if(first_node == null) throw new java.lang.NullPointerException();
+        if(first_node == null) throw new NoSuchElementException();
         if(n == 1){
             Item item = first_node.item;
             first_node = null;
@@ -92,7 +92,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
     
     public Item removeLast() {                 // remove and return the item from the end
-        if(last_node == null) throw new java.lang.NullPointerException();
+        if(last_node == null) throw new NoSuchElementException();
         if(n == 1){
             if(first_node == null) throw new java.lang.NullPointerException();
             Item item = first_node.item;
@@ -167,7 +167,7 @@ public class Deque<Item> implements Iterable<Item> {
         d.addLast("LAST 5");
         d.addFirst("FIRST 5");
         
-        Iterator it = d.iterator();
+        Iterator<String> it = d.iterator();
         while (it.hasNext()){
             System.out.println(it.next());
         }

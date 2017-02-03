@@ -28,6 +28,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public void enqueue(Item item) {           // add the item
+        if(item == null) throw new java.lang.NullPointerException();
         Node node = new Node();
         node.item = item;
         if(n == 0) {
@@ -57,7 +58,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public Item dequeue() {                    // remove and return a random item
-        if(n == 0) throw new java.lang.NullPointerException();
+        if(n == 0) throw new NoSuchElementException();
         if(n == 1){
             Item item = first_node.item;
             n = 0;
@@ -99,7 +100,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public Item sample() {                     // return (but do not remove) a random item
-        int r = StdRandom.uniform(n+1);
+        if(n == 0) throw new NoSuchElementException();
+        int r = StdRandom.uniform(n);
         Node node = first_node;
         for(int i = 0; i < r; i++){
             node = node.next_node;
@@ -118,7 +120,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private Node i_current_node;
         
         public ArrayIterator(){ //TODO: fix iterator data structure being separate from the real one
-            if(n == 0) throw new java.lang.NullPointerException();
+            if(n == 0) {
+                i_first_node = null;
+                i_current_node = null;
+                return;
+            }
             if(n == 1) {
                 i_first_node = first_node;
                 i_current_node = i_first_node;
@@ -178,21 +184,40 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public static void main(String[] args) {   // unit testing (optional)
         RandomizedQueue<String> rq = new RandomizedQueue<String>();
+        
+        
         rq.enqueue("1");
         rq.enqueue("2");
         rq.enqueue("3");
         rq.enqueue("4");
         rq.enqueue("5");
         
-        //System.out.println(rq.dequeue());
+        rq.dequeue();
+        rq.dequeue();
+        rq.dequeue();
+        rq.dequeue();
+        rq.dequeue();
         
+        rq.enqueue("1");
+        rq.enqueue("2");
+        rq.enqueue("3");
+        rq.enqueue("4");
+        rq.enqueue("5");
+        
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        System.out.println(rq.dequeue());
+        
+       
         
         
        Iterator it = rq.iterator();
-       while(it.hasNext()){
+       //while(it.hasNext()){
             //System.out.println(it.next());
-            System.out.println(rq.dequeue());
-            it.next();
-       }
+            //System.out.println(rq.dequeue());
+            //it.next();
+       //}
     }
 }
