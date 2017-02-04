@@ -76,7 +76,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
             node = node.next_node;
         }
-        
         //remove the random node from the queue and return its item
         Node previous = node.prev_node;
         Node next = node.next_node;

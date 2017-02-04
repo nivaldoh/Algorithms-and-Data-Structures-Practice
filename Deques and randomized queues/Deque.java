@@ -31,7 +31,7 @@ public class Deque<Item> implements Iterable<Item> {
         if(item == null) throw new java.lang.NullPointerException();
         if(last_node == null) last_node = first_node;
         
-        Node previous_first = first_node; //TODO: check for mutations
+        Node previous_first = first_node;
         first_node = new Node();
         first_node.item = item;
         first_node.next_node = previous_first;
@@ -101,7 +101,6 @@ public class Deque<Item> implements Iterable<Item> {
             return item;
         }
         if(last_node == null) throw new NoSuchElementException();
-        
         Item item = last_node.item;
         Node second_last = last_node.prev_node;
         second_last.next_node = null;
