@@ -72,6 +72,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         for(int i = 0; i < r; i++){
             node = node.next_node;
         }
+        
+        
+        
         //remove the random node from the queue and return its item
         Node previous = node.prev_node;
         Node next = node.next_node;
@@ -118,8 +121,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private int i;
         private Node i_first_node;
         private Node i_current_node;
+        private int count;
         
         public ArrayIterator(){ //TODO: fix iterator data structure being separate from the real one
+            i = 0;
+            count = n;
             if(n == 0) {
                 i_first_node = null;
                 i_current_node = null;
@@ -131,7 +137,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 return;
             }
             //pass linked list to array
-            i = 0;
             a = (RandomizedQueue<Item>.Node[]) new RandomizedQueue.Node[n];
             Node node = first_node;
             int temp_index = 0;
@@ -143,30 +148,33 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             //shuffle node order
             StdRandom.shuffle(a);
             //turn array into a shuffled linked list
-            for(int j = 0; j < n; j++) {
-                if(j == 0) {
-                    i_first_node = a[0];
-                    i_first_node.prev_node = null;
-                    if(n == 1){
-                        i_first_node.next_node = null;
-                    }
-                    else i_first_node.next_node = a[1];
-                    continue;
-                }
-                if(j == n - 1) {
-                    a[j].prev_node = a[j - 1];
-                    a[j].next_node = null;
-                    continue;
-                }
-                a[j].prev_node = a[j - 1];
-                a[j].next_node = a[j + 1];
-            }
-            i_current_node = i_first_node;
+//            for(int j = 0; j < n; j++) {
+//                if(j == 0) {
+//                    i_first_node = a[0];
+//                    i_first_node.prev_node = null;
+//                    if(n == 1){
+//                        i_first_node.next_node = null;
+//                    }
+//                    else i_first_node.next_node = a[1];
+//                    continue;
+//                }
+//                if(j == n - 1) {
+//                    a[j].prev_node = a[j - 1];
+//                    a[j].next_node = null;
+//                    continue;
+//                }
+//                a[j].prev_node = a[j - 1];
+//                a[j].next_node = a[j + 1];
+//            }
+//            i_current_node = i_first_node;
+            
+            
             //a[] = null //free memory?
         }
         
         public boolean hasNext() {
-            return i_current_node != null;
+            //return i_current_node != null;
+            return i < count;
         }
 
         public void remove() {
@@ -175,9 +183,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            Item item = i_current_node.item;
-            //System.out.println(i_current_node.prev_node);
-            i_current_node = i_current_node.next_node;
+//            Item item = i_current_node.item;
+//            //System.out.println(i_current_node.prev_node);
+//            i_current_node = i_current_node.next_node;
+//            return item;
+            
+            Item item = a[i].item;
+            i++;
             return item;
         }
     }

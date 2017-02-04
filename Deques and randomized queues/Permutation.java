@@ -12,6 +12,7 @@ public class Permutation {
        int k = Integer.parseInt(args[0]);
        if(k == 0) return;
        In in = new In();
+       
        //String[] s = in.readAllStrings();
        RandomizedQueue<String> rq = new RandomizedQueue<String>();
        while (!in.isEmpty()) {
