@@ -54,7 +54,7 @@ public class Deque<Item> implements Iterable<Item> {
             n++;
             return;
         }
-        if(n == 1 || last_node == null){ //first node is expected not to be null here
+        if(n == 1 || last_node == null) { //first node is expected not to be null here
             if(first_node == null) throw new java.lang.NullPointerException();
             to_add.prev_node = first_node;
             first_node.next_node = to_add;
@@ -69,9 +69,9 @@ public class Deque<Item> implements Iterable<Item> {
         n++;
     }
     
-    public Item removeFirst(){                // remove and return the item from the front
+    public Item removeFirst() {                // remove and return the item from the front
         if(first_node == null) throw new NoSuchElementException();
-        if(n == 1){
+        if(n == 1) {
             Item item = first_node.item;
             first_node = null;
             last_node = null;
@@ -92,7 +92,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
     
     public Item removeLast() {                 // remove and return the item from the end
-        if(n == 1){
+        if(n == 1) {
             if(first_node == null) throw new java.lang.NullPointerException();
             Item item = first_node.item;
             first_node = null;
@@ -168,7 +168,7 @@ public class Deque<Item> implements Iterable<Item> {
         d.addFirst("FIRST 5");
         
         Iterator<String> it = d.iterator();
-        while (it.hasNext()){
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
     }
