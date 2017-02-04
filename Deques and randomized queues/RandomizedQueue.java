@@ -81,11 +81,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Node previous = node.prev_node;
         Node next = node.next_node;
         if(previous != null) previous.next_node = next;
-        if(previous == null){
-            if(next == null) throw new java.lang.NullPointerException();
-            first_node = next;
-        }
         if(next != null) next.prev_node = previous;
+        if(next == null) last_node = previous;
+        if(previous == null) first_node = next;
         n--;
         if(n == 1 && previous != null){
             previous.prev_node = null;
@@ -109,8 +107,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         int r = StdRandom.uniform(n);
         Node node = first_node;
         for(int i = 0; i < r; i++){
+            if(node == null) return first_node.item;
             node = node.next_node;
         }
+        if(node == null) return first_node.item;
         return node.item;
     }
     
@@ -149,29 +149,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
             //shuffle node order
             StdRandom.shuffle(a);
-            //turn array into a shuffled linked list
-//            for(int j = 0; j < n; j++) {
-//                if(j == 0) {
-//                    i_first_node = a[0];
-//                    i_first_node.prev_node = null;
-//                    if(n == 1){
-//                        i_first_node.next_node = null;
-//                    }
-//                    else i_first_node.next_node = a[1];
-//                    continue;
-//                }
-//                if(j == n - 1) {
-//                    a[j].prev_node = a[j - 1];
-//                    a[j].next_node = null;
-//                    continue;
-//                }
-//                a[j].prev_node = a[j - 1];
-//                a[j].next_node = a[j + 1];
-//            }
-//            i_current_node = i_first_node;
-            
-            
-            //a[] = null //free memory?
         }
         
         public boolean hasNext() {
@@ -185,26 +162,21 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-//            Item item = i_current_node.item;
-//            //System.out.println(i_current_node.prev_node);
-//            i_current_node = i_current_node.next_node;
-//            return item;
-            
-            Item item = a[i].item;
+Item item = a[i].item;
             i++;
             return item;
         }
     }
     
-    public static void main(String[] args) {   // unit testing (optional)
+    public static void main(String[] args) {
         RandomizedQueue<Double> rq = new RandomizedQueue<Double>();
         
         
         rq.enqueue(0.1);
-        rq.enqueue(0.7);
+        rq.enqueue(0.2);
         rq.enqueue(0.0);
-        rq.enqueue(0.1);
-        rq.enqueue(0.1);
+        rq.enqueue(0.3);
+        rq.enqueue(0.4);
         
         //rq.dequeue();
         
@@ -216,10 +188,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         
         
        Iterator it = rq.iterator();
-       while(it.hasNext()){
-            System.out.println(it.next());
+       //while(it.hasNext()){
+            //System.out.println(it.next());
             //System.out.println(rq.dequeue());
             //it.next();
-       }
+       //}
     }
 }
