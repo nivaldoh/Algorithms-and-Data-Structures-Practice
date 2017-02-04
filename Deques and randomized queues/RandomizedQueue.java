@@ -70,10 +70,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         int r = StdRandom.uniform(n);
         Node node = first_node;
         for(int i = 0; i < r; i++){
+            if(node == null) {
+                node = first_node;
+                break;
+            }
             node = node.next_node;
         }
-        
-        
         
         //remove the random node from the queue and return its item
         Node previous = node.prev_node;
