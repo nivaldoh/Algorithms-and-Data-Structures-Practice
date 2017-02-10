@@ -127,6 +127,8 @@ public class Point implements Comparable<Point> {
     public static void main(String[] args) {
         /* YOUR CODE HERE */
         //Point p = new Point(0, 0);
+        //Point p2 = new Point(10, 10);
+        //p.drawTo(p2);
         //System.out.println(p.slopeTo(new Point(10, 5)));
         
     }
