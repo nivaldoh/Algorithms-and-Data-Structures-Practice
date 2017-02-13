@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
+import java.lang.Math;
 
 public class BruteCollinearPoints {
     private ArrayList<LineSegment> lineSegments;
@@ -16,18 +17,48 @@ public class BruteCollinearPoints {
                 for(int k = j + 1; k < n; k++) {
                     for(int l = k + 1; l < n; l++) {
                         if(points[i].slopeTo(points[j]) == points[i].slopeTo(points[k]) && points[i].slopeTo(points[j]) == points[i].slopeTo(points[l])){
-                            lineSegments.add(new LineSegment(points[i], points[l])); // this is wrong. The two endpoints need to be the most distant ones from each other in a segment
-                            lineSegments.add(new LineSegment(points[i], points[j])); // temporary solution
-                            lineSegments.add(new LineSegment(points[i], points[k])); // TODO: use Point.compareTo()
-                            lineSegments.add(new LineSegment(points[j], points[k]));
-                            lineSegments.add(new LineSegment(points[j], points[l]));
-                            lineSegments.add(new LineSegment(points[k], points[l]));
+                            //lineSegments.add(new LineSegment(points[i], points[l])); // this is wrong. The two endpoints need to be the most distant ones from each other in a segment
+                            //lineSegments.add(new LineSegment(points[i], points[j])); // temporary solution
+                            //lineSegments.add(new LineSegment(points[i], points[k])); // TODO: use Point.compareTo()
+                            
+                            //find highest y (or x if line is horizontal)
+                            Point endpoint1 = points[i];
+                            for(int z = 0; z < 3; z++){
+                                if(endpoint1.compareTo(points[j]) == -1) {
+                                    endpoint1 = points[j];
+                                    continue;
+                                }
+                                if(endpoint1.compareTo(points[k]) == -1) {
+                                    endpoint1 = points[k];
+                                    continue;
+                                }
+                                if(endpoint1.compareTo(points[l]) == -1) endpoint1 = points[l];
+                            }
+                            
+                            //find lowest y (or x if line is horizontal)
+                            Point endpoint2 = points[i];
+                            for(int z = 0; z < 3; z++){
+                                if(endpoint2.compareTo(points[j]) == 1) {
+                                    endpoint2 = points[j];
+                                    continue;
+                                }
+                                if(endpoint2.compareTo(points[k]) == 1) {
+                                    endpoint2 = points[k];
+                                    continue;
+                                }
+                                if(endpoint2.compareTo(points[l]) == 1) endpoint2 = points[l];
+                            }
+                            lineSegments.add(new LineSegment(endpoint1, endpoint2));
                         }
                     }
                 }
             }
         }
     }
+    
+//    private double distance(int x1, int y1, int x2, int y2) {
+//        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+//    }
     
     public int numberOfSegments() { // the number of line segments
         return lineSegments.size();
