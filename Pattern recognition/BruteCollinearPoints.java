@@ -18,29 +18,29 @@ public class BruteCollinearPoints {
                             //find highest y (or x if line is horizontal)
                             Point endpoint1 = points[i];
                             for(int z = 0; z < 3; z++){
-                                if(endpoint1.compareTo(points[j]) == -1) {
+                                if(endpoint1.compareTo(points[j]) < 0) {
                                     endpoint1 = points[j];
                                     continue;
                                 }
-                                if(endpoint1.compareTo(points[k]) == -1) {
+                                if(endpoint1.compareTo(points[k]) < 0) {
                                     endpoint1 = points[k];
                                     continue;
                                 }
-                                if(endpoint1.compareTo(points[l]) == -1) endpoint1 = points[l];
+                                if(endpoint1.compareTo(points[l]) < 0) endpoint1 = points[l];
                             }
                             
                             //find lowest y (or x if line is horizontal)
                             Point endpoint2 = points[i];
                             for(int z = 0; z < 3; z++){
-                                if(endpoint2.compareTo(points[j]) == 1) {
+                                if(endpoint2.compareTo(points[j]) > 0) {
                                     endpoint2 = points[j];
                                     continue;
                                 }
-                                if(endpoint2.compareTo(points[k]) == 1) {
+                                if(endpoint2.compareTo(points[k]) > 0) {
                                     endpoint2 = points[k];
                                     continue;
                                 }
-                                if(endpoint2.compareTo(points[l]) == 1) endpoint2 = points[l];
+                                if(endpoint2.compareTo(points[l]) > 0) endpoint2 = points[l];
                             }
                             lineSegments.add(new LineSegment(endpoint1, endpoint2));
                         }

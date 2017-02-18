@@ -37,30 +37,30 @@ public class FastCollinearPoints {
                     //find highest y (or x if line is horizontal)
                     Point endpoint1 = current;
                     for(int z = 0; z < 3; z++){
-                        if(endpoint1.compareTo(points[startIndex]) == -1) {
+                        if(endpoint1.compareTo(points[startIndex]) < 0) {
                             endpoint1 = points[startIndex];
                             continue;
                         }
-                        if(endpoint1.compareTo(points[startIndex + 1]) == -1) {
+                        if(endpoint1.compareTo(points[startIndex + 1]) < 0) {
                             endpoint1 = points[startIndex + 1];
                             continue;
                         }
-                        if(endpoint1.compareTo(points[startIndex + 2]) == -1) endpoint1 = points[startIndex + 2];
+                        if(endpoint1.compareTo(points[startIndex + 2]) < 0) endpoint1 = points[startIndex + 2];
                     }
                     
                     //find lowest y (or x if line is horizontal)
                     //Point endpoint2 = points[startIndex];
                     Point endpoint2 = current;
                     for(int z = 0; z < 3; z++){
-                        if(endpoint2.compareTo(points[startIndex]) == 1) {
+                        if(endpoint2.compareTo(points[startIndex]) > 0) {
                             endpoint2 = points[startIndex];
                             continue;
                         }
-                        if(endpoint2.compareTo(points[startIndex + 1]) == 1) {
+                        if(endpoint2.compareTo(points[startIndex + 1]) > 0) {
                             endpoint2 = points[startIndex + 1];
                             continue;
                         }
-                        if(endpoint2.compareTo(points[startIndex + 2]) == 1) endpoint2 = points[startIndex + 2];
+                        if(endpoint2.compareTo(points[startIndex + 2]) > 0) endpoint2 = points[startIndex + 2];
                     }
                     
                     for(Point mp : maxPoints){ // check if this line segment has already been added
