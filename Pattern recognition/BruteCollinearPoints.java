@@ -2,11 +2,9 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import java.lang.Math;
 
 public class BruteCollinearPoints {
     private ArrayList<LineSegment> lineSegments;
-    
     
     public BruteCollinearPoints(Point[] points) { // finds all line segments containing 4 points
         if(points == null) throw new NullPointerException("Null point vector");
@@ -17,10 +15,6 @@ public class BruteCollinearPoints {
                 for(int k = j + 1; k < n; k++) {
                     for(int l = k + 1; l < n; l++) {
                         if(points[i].slopeTo(points[j]) == points[i].slopeTo(points[k]) && points[i].slopeTo(points[j]) == points[i].slopeTo(points[l])){
-                            //lineSegments.add(new LineSegment(points[i], points[l])); // this is wrong. The two endpoints need to be the most distant ones from each other in a segment
-                            //lineSegments.add(new LineSegment(points[i], points[j])); // temporary solution
-                            //lineSegments.add(new LineSegment(points[i], points[k])); // TODO: use Point.compareTo()
-                            
                             //find highest y (or x if line is horizontal)
                             Point endpoint1 = points[i];
                             for(int z = 0; z < 3; z++){
@@ -55,10 +49,6 @@ public class BruteCollinearPoints {
             }
         }
     }
-    
-//    private double distance(int x1, int y1, int x2, int y2) {
-//        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-//    }
     
     public int numberOfSegments() { // the number of line segments
         return lineSegments.size();
