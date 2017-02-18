@@ -2,14 +2,22 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
+import java.util.*;
 
 public class BruteCollinearPoints {
     private ArrayList<LineSegment> lineSegments;
     
     public BruteCollinearPoints(Point[] points) { // finds all line segments containing 4 points
         if(points == null) throw new NullPointerException("Null point vector");
-        lineSegments = new ArrayList<LineSegment>();
         int n = points.length;
+        Set<Point> checkRepeated = new TreeSet<Point>();
+        for(int i = 0; i < n; i++){
+            if(checkRepeated.contains(points[i])) throw new IllegalArgumentException();
+            checkRepeated.add(points[i]);
+        }
+        checkRepeated = null;
+        
+        lineSegments = new ArrayList<LineSegment>();
         for(int i = 0; i < n; i++) {
             for(int j = i + 1; j < n; j++) {
                 for(int k = j + 1; k < n; k++) {
