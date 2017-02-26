@@ -6,7 +6,9 @@ import java.util.Collections;
 
 public class Solver {
     private MinPQ<SearchNode> pq;
+    private MinPQ<SearchNode> twinPQ;
     private boolean solved;
+    private boolean unsolvable;
     private ArrayList<Board> solutionTree;
     private SearchNode lastNode;
     
@@ -40,17 +42,39 @@ public class Solver {
             return;
         }
         
+        //twin priority queue
+        unsolvable = false;
+        twinPQ = new MinPQ<SearchNode>();
+        Board twin = initial.twin();
+        twinPQ.insert(new SearchNode(twin, twin.manhattan(), null, 0));
+        SearchNode twinMin = null;
+        if(twin.isGoal()){
+            unsolvable = true;
+            return;
+        }
+        
+        //main priority queue
         pq = new MinPQ<SearchNode>();
         pq.insert(new SearchNode(initial, initial.manhattan(), null, 0));
-        solved = initial.isGoal();
         SearchNode min = null;
+        
+        solved = initial.isGoal();
         while(!solved) {
+            //main priority queue
             min = pq.delMin();
-            
             solved = min.board.isGoal();
             for(Board b : min.board.neighbors()) {
                 if(!b.equals(min.board))
                     pq.insert(new SearchNode(b, b.manhattan(), min, min.moves + 1));
+            }
+            
+            //twin priority queue
+            twinMin = twinPQ.delMin();
+            unsolvable = twinMin.board.isGoal();
+            if(unsolvable) return;
+            for(Board b : twinMin.board.neighbors()) {
+                if(!b.equals(twinMin.board))
+                    twinPQ.insert(new SearchNode(b, b.manhattan(), twinMin, twinMin.moves + 1));
             }
         }
         lastNode = min;
@@ -62,6 +86,7 @@ public class Solver {
     }
     
     public boolean isSolvable() {           // is the initial board solvable?
+        if(unsolvable) return false;
         return solved;
     }
     

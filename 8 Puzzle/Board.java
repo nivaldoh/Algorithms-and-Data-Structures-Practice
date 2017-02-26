@@ -69,7 +69,11 @@ public class Board {
     
     public Board twin() {                   // a board that is obtained by exchanging any pair of blocks
         int[][] t = new int[n][n];
-        System.arraycopy( b, 0, t, 0, n );
+        for (int i = 0; i < n; i++) {
+            int[] line = b[i];
+            t[i] = new int[n];
+            System.arraycopy( line, 0, t[i], 0, n );
+        }
         if(t[0][0] != 0 && t[0][1] != 0) {
             int temp = t[0][0];
             t[0][0] = t[0][1];
