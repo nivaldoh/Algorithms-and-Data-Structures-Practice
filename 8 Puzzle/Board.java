@@ -38,7 +38,7 @@ public class Board {
                 
                 if (current != correct){
                     int dist = correct - current;
-                    if (dist < 0) dist = dist * -1;
+                    //if (dist < 0) dist = dist * -1;
                     m += dist;
                 }
             }
