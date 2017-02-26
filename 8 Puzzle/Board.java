@@ -35,14 +35,31 @@ public class Board {
                 int correct = i*n + j + 1;
                 
                 if (current == 0) continue; // doesn't count the empty spot (represented by 0)
+                if (current == correct) continue;
                 
-                if (current != correct){
-                    int dist = correct - current;
-                    //if (dist < 0) dist = dist * -1;
-                    m += dist;
+                int goalI, goalJ;
+                if(current <= n){
+                    goalI = 0;
+                    goalJ = current - 1;
+                }
+                else{
+                    if(current%n == 0) goalI = current/n - 1; //integer division
+                    else goalI = current/n;
+                    goalJ = current%n - 1;
+                    if(goalJ < 0) goalJ = n - 1;
+                }
+                int distI = goalI - i;
+                if(distI < 0) distI *= -1;
+                int distJ = goalJ - j;
+                if(distJ < 0) distJ *= -1;
+                //System.out.println("CURRENT = " + current);
+                //System.out.println("GOAL I = " + goalI);
+                //System.out.println("GOAL J = " + goalJ);
+//                System.out.println("DIST I = " + distI);
+//                System.out.println("DIST J = " + distJ);
+                m += distI + distJ;
                 }
             }
-        }
         return m;
     }
     
@@ -53,9 +70,16 @@ public class Board {
     public Board twin() {                   // a board that is obtained by exchanging any pair of blocks
         int[][] t = new int[n][n];
         System.arraycopy( b, 0, t, 0, n );
-        int temp = t[0][0];
-        t[0][0] = t[0][1];
-        t[0][1] = temp;
+        if(t[0][0] != 0 && t[0][1] != 0) {
+            int temp = t[0][0];
+            t[0][0] = t[0][1];
+            t[0][1] = temp;
+        }
+        else{
+            int temp = t[1][0];
+            t[1][0] = t[1][1];
+            t[1][1] = temp;
+        }
         return new Board(t);
     }
     

@@ -36,6 +36,7 @@ public class Solver {
         if (initial.manhattan() == 0) {
             solutionTree.add(initial);
             solved = true;
+            lastNode = new SearchNode(initial, initial.manhattan(), null, 0);
             return;
         }
         
@@ -73,8 +74,6 @@ public class Solver {
         return solutionTree;
     }
     
-    
-    
     public static void main(String[] args) {
 
         // create initial board from file
@@ -94,8 +93,11 @@ public class Solver {
             StdOut.println("No solution possible");
         else {
             StdOut.println("Minimum number of moves = " + solver.moves());
-            for (Board board : solver.solution())
+            for (Board board : solver.solution()){
+                //System.out.println("Moves = " + );
+                System.out.println("Manhattan = " + board.manhattan());
                 StdOut.println(board);
+            }
         }
     }
 }
