@@ -88,7 +88,8 @@ public class Board {
     }
     
     public boolean equals(Object y) {       // does this board equal y?
-        if(y == null) throw new NullPointerException("Attempted to compare a null board");
+        //if(y == null) throw new NullPointerException("Attempted to compare a null board");
+        if(y == null) return false;
         return y.toString().equals(toString());
     }
     
